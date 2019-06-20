@@ -1,4 +1,5 @@
 import boto3
+import botocore
 import click
 
 session = boto3.Session(profile_name='python-course')
@@ -88,7 +89,10 @@ def stop_instances(owner):
         
     for i in instances:
         print("Stopping {0}...".format(i.id))
-        i.stop()
+        try:
+            i.stop()
+        except botocore.exceptions.ClientError as e:
+            print("Could not stop {0} Due to {1}.".format(i.id, str(e)) )
     
     return
     
