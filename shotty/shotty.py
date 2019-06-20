@@ -15,14 +15,43 @@ def filter_instances(owner):
 
     return instances
     
-        
+
 @click.group()
+def cli():
+    """To manage EC2 instances and snapshots"""
+    
+@cli.group('volumes')
+def volumes():
+    """Commands for volumes"""
+
+@cli.group('instances')
 def instances():
     """Commands for instances"""
 
 
+@volumes.command("list")
+@click.option('--owner', default=None, help="Only volumes for the owner (tag Owner:<name>)")
+def list_volumes(owner):
+    "List EC2 volumes" 
+    
+    instances = filter_instances(owner)
+    
+    for i in instances:
+        for v in i.volumes.all():
+            print(", ".join((
+                v.id, 
+                i.id,
+                v.state,
+                str(v.size) + "GiB",
+                v.encrypted and "Encrypted" or "Not Encrypted"
+            )))
+            
+    return 
+
+
+
 @instances.command("list")
-@click.option('--owner', default=None, help="Only instances for the project (tag Project:<name>)")
+@click.option('--owner', default=None, help="Only instances for the owner (tag Owner:<name>)")
 def list_instances(owner):
     "List all EC2 intances"
     instances = filter_instances(owner)
@@ -66,5 +95,5 @@ def stop_instances(owner):
     
     
 if __name__ == '__main__':
-    instances()
+    cli()
 
