@@ -9,8 +9,14 @@ pipenv --three
 pipenv install boto3
 pipenv install click
 pipenv install -d ipython
-pipenv install -d setuptools
 
 pipenv run ipython
 pipenv run python shotty/shotty.py
+```
+
+
+```
+pipenv install -d setuptools
+#setup.py tunkkaus
+pipenv run python setup.py bdist_wheel
 ```
