@@ -20,6 +20,8 @@ pipenv install -d setuptools
 #setup.py tunkkaus
 pipenv run python setup.py bdist_wheel
 
-#To intall on systems pip, for example
+# To intall on systems pip, for example
 pip3 install dist/acg_python_course_learning_project-0.1-py3-none-any.whl
+# As the entry points are defined it now can be used as a standard script
+shotty instances list --owner tg
 ```
