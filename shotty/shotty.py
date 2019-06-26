@@ -53,7 +53,9 @@ def list_volumes(owner):
 
 @instances.command("list")
 @click.option('--owner', default=None, help="Only instances for the owner (tag Owner:<name>)")
-def list_instances(owner):
+@click.option('--all', 'list all', default=False, is_flag=True, 
+    help="List all intances")
+def list_instances(owner, list_all):
     "List all EC2 intances"
     instances = filter_instances(owner)
 
